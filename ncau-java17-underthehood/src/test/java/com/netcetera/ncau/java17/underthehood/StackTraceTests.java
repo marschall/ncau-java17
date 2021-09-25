@@ -1,6 +1,7 @@
 package com.netcetera.ncau.java17.underthehood;
 
-import java.nio.file.Paths;
+import java.nio.file.FileSystems;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,9 @@ class StackTraceTests {
 
   @Test
   void hiddenClassAndNullPointer() {
-    Paths.get("").getFileName().endsWith(".txt");
+    Optional.of(FileSystems.getDefault()).map(fileSystem -> {
+      return fileSystem.getRootDirectories().iterator().next().getParent().getFileName();
+    });
   }
 
 }

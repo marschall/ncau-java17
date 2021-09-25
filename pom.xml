@@ -46,6 +46,7 @@
   
   <modules>
     <module>ncau-java17-underthehood</module>
+    <module>ncau-java17-benchmarks</module>
   </modules>
 
   <build>
@@ -72,6 +73,11 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -122,6 +128,7 @@
   </dependencyManagement>
 
   <properties>
+    <jmh.version>1.33</jmh.version>
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
   </properties>
