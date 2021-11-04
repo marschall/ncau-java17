@@ -12,7 +12,6 @@ public class Main {
     byte[] inputArray = new byte[arraySize];
     for (int i = 0; i < inputArray.length; i++) {
       inputArray[i] = (byte) i;
-
     }
     CharBuffer charBuffer = CharBuffer.allocate(arraySize);
     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(inputArray);
@@ -20,7 +19,6 @@ public class Main {
     InputStreamReader reader = new InputStreamReader(byteArrayInputStream);
 
     for (int i = 0; i < 5; i++) {
-
       byteArrayInputStream.reset();
       charBuffer.clear();
       System.out.println(reader.read(charBuffer));

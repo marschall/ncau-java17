@@ -30,7 +30,6 @@ public class ByteBufferBenchmarks {
     byte[] inputArray = new byte[arraySize];
     for (int i = 0; i < inputArray.length; i++) {
       inputArray[i] = (byte) i;
-
     }
     this.charBuffer = CharBuffer.allocate(arraySize);
     this.byteArrayInputStream = new ByteArrayInputStream(inputArray);
