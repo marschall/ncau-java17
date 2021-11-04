@@ -25,6 +25,11 @@ class ObjectLayoutTests {
   void gapInSuperclass() {
     System.out.println(ClassLayout.parseClass(GapInSubclass.class).toPrintable());
   }
+  
+  @Test
+  void sizeRoudningUp() {
+    System.out.println(ClassLayout.parseClass(H.class).toPrintable());
+  }
 
   static abstract class GapInHeaderSuperclass {
 
@@ -91,5 +96,21 @@ class ObjectLayoutTests {
     }
 
   }
+
+  static class E {
+    byte b0;
+  }
+
+  static class F extends E {
+    byte b1;
+  }
+
+  static class G extends F {
+    byte b2;
+  }
+
+  static class H extends G {
+    byte b3;
+  } 
 
 }
