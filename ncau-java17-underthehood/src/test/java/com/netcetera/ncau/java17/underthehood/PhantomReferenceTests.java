@@ -22,6 +22,7 @@ public class PhantomReferenceTests {
     reference.getResource().free();
   }
 
+  // must not reference ToBeCleanedByPhantomReference
   static final class ToBeCleanedReference extends PhantomReference<ToBeCleanedByPhantomReference> {
 
     private final NativeResource resource;

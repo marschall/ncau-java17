@@ -20,6 +20,7 @@ final class ToBeCleanedByCleaner implements AutoCloseable {
     this.cleanable.clean();
   }
 
+  // must not reference ToBeCleanedByCleaner
   static final class CleaningAction implements Runnable {
 
     private final NativeResource resource;
