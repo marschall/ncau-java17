@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration version="2.0" label="JUnit" description="Minimal configuration that records only JUnit test and plan execution." provider="ncau-java17-overthehood">
+
+  <event name="org.junit.TestExecution">
+    <setting name="enabled">true</setting>
+  </event>
+
+  <event name="org.junit.TestPlanExecution">
+    <setting name="enabled">true</setting>
+  </event>
+
+</configuration>

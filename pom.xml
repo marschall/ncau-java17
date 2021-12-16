@@ -47,6 +47,7 @@
   <modules>
     <module>ncau-java17-underthehood</module>
     <module>ncau-java17-benchmarks</module>
+    <module>ncau-java17-overthehood</module>
   </modules>
 
   <build>
