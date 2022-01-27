@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.minBy;
 import static java.util.stream.Collectors.teeing;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -19,19 +20,18 @@ class StreamTests {
   void testTeeing() {
     //@formatter:off
     AgeStatistics statistics = getPersons().stream()
-        .map(Person::getAge)
         .collect(teeing(
-              minBy(Integer::compare),
-              maxBy(Integer::compare),
-              (min,  max) -> new AgeStatistics(min.get(), max.get())));
+            minBy(Comparator.comparingInt(Person::getAge)),
+            maxBy(Comparator.comparingInt(Person::getAge)),
+            (youngest,  oldest) -> new AgeStatistics(youngest.get(), oldest.get())));
     //@formatter:on
-    assertEquals(21, statistics.getMinimumAge());
-    assertEquals(42, statistics.getMaximumAge());
-
-    // in this case IntStream.summaryStatistics() -> IntSummaryStatistics may be better
+    assertEquals(21, statistics.getYoungest().getAge());
+    assertEquals(42, statistics.getOldest().getAge());
   }
 
   static final class Person {
+
+    // good candidate for record
 
     private final int age;
 
@@ -47,21 +47,23 @@ class StreamTests {
 
   static final class AgeStatistics {
 
-    private final int minimumAge;
+    // good candidate for record
 
-    private final int maximumAge;
+    private final Person youngest;
 
-    AgeStatistics(int minimumAge, int maximumAge) {
-      this.minimumAge = minimumAge;
-      this.maximumAge = maximumAge;
+    private final Person oldest;
+
+    AgeStatistics(Person youngest, Person oldest) {
+      this.youngest = youngest;
+      this.oldest = oldest;
     }
 
-    int getMinimumAge() {
-      return minimumAge;
+    Person getYoungest() {
+      return youngest;
     }
 
-    int getMaximumAge() {
-      return maximumAge;
+    Person getOldest() {
+      return oldest;
     }
 
   }
