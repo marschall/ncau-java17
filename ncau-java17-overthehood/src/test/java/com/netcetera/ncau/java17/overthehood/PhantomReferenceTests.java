@@ -1,13 +1,11 @@
-package com.netcetera.ncau.java17.underthehood;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+package com.netcetera.ncau.java17.overthehood;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
 
 import org.junit.jupiter.api.Test;
 
-public class PhantomReferenceTests {
+class PhantomReferenceTests {
 
   @Test
   void phantomReferenceExample() throws IllegalArgumentException, InterruptedException {
@@ -15,19 +13,22 @@ public class PhantomReferenceTests {
 
     NativeResource resource = new NativeResource();
     ToBeCleanedByPhantomReference toBeCleaned = new ToBeCleanedByPhantomReference(resource);
-    new ToBeCleanedReference(toBeCleaned, referenceQueue, resource);
+    new NativeResourcePhantomReference(toBeCleaned, referenceQueue, resource);
 
-    ToBeCleanedReference reference = (ToBeCleanedReference) referenceQueue.remove(100L);
-    assertNotNull(reference);
-    reference.getResource().free();
+    // would have to be called in a loop in a dedicated thread
+    NativeResourcePhantomReference reference = (NativeResourcePhantomReference) referenceQueue.remove(100L);
+    if (reference != null) {
+      reference.getResource().free();
+    }
   }
 
   // must not reference ToBeCleanedByPhantomReference
-  static final class ToBeCleanedReference extends PhantomReference<ToBeCleanedByPhantomReference> {
+  // therefore we need a direct reference to NativeResource
+  static final class NativeResourcePhantomReference extends PhantomReference<ToBeCleanedByPhantomReference> {
 
     private final NativeResource resource;
 
-    public ToBeCleanedReference(ToBeCleanedByPhantomReference referent,
+    NativeResourcePhantomReference(ToBeCleanedByPhantomReference referent,
         ReferenceQueue<? super ToBeCleanedByPhantomReference> queue, NativeResource resource) {
       super(referent, queue);
       this.resource = resource;

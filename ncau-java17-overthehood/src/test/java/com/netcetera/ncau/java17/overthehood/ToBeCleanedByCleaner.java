@@ -1,10 +1,11 @@
-package com.netcetera.ncau.java17.underthehood;
+package com.netcetera.ncau.java17.overthehood;
 
 import java.lang.ref.Cleaner;
 
 final class ToBeCleanedByCleaner implements AutoCloseable {
 
   // Ideally you have only one per library
+  // starts a daemon thread
   private static final Cleaner CLEANER = Cleaner.create();
 
   private final Cleaner.Cleanable cleanable;
