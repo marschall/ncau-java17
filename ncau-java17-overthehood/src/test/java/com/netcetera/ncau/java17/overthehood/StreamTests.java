@@ -7,10 +7,40 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
 class StreamTests {
+
+  @Test
+  void testFlatMapToInt() {
+    StringBuilder concatenated = Stream.of("one", "two", "three")
+      .flatMapToInt(s -> chars(s))
+      .collect(StringBuilder::new, (builder, c) -> builder.append((char) c), (a, b) -> a.append(b));
+    assertEquals("onetwothree", concatenated.toString());
+  }
+
+  @Test
+  void testMapMulti() {
+    StringBuilder concatenated = Stream.of("one", "two", "three")
+        .mapMultiToInt((s, downstream) -> {
+          for (int i = 0; i < s.length(); i++) {
+            downstream.accept(s.charAt(i));
+          }
+        })
+        .collect(StringBuilder::new, (builder, c) -> builder.append((char) c), (a, b) -> a.append(b));
+    assertEquals("onetwothree", concatenated.toString());
+  }
+
+  private static IntStream chars(String s) {
+    // IntStream because there is no CharStream
+    //@formatter:off
+    return IntStream.range(0, s.length())
+                    .map(i -> s.charAt(i));
+    //@formatter:on
+  }
 
   private static List<Person> getPersons() {
     return List.of(new Person(21), new Person(23), new Person(42));
@@ -20,10 +50,11 @@ class StreamTests {
   void testTeeing() {
     //@formatter:off
     AgeStatistics statistics = getPersons().stream()
-        .collect(teeing(
-            minBy(Comparator.comparingInt(Person::getAge)),
-            maxBy(Comparator.comparingInt(Person::getAge)),
-            (youngest,  oldest) -> new AgeStatistics(youngest.get(), oldest.get())));
+        .collect(
+            teeing(
+                minBy(Comparator.comparingInt(Person::getAge)),
+                maxBy(Comparator.comparingInt(Person::getAge)),
+                (youngest,  oldest) -> new AgeStatistics(youngest.get(), oldest.get())));
     //@formatter:on
     assertEquals(21, statistics.getYoungest().getAge());
     assertEquals(42, statistics.getOldest().getAge());
