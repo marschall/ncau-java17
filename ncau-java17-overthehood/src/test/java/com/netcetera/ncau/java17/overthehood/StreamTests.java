@@ -3,7 +3,11 @@ package com.netcetera.ncau.java17.overthehood;
 import static java.util.stream.Collectors.maxBy;
 import static java.util.stream.Collectors.minBy;
 import static java.util.stream.Collectors.teeing;
+import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,6 +17,20 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 class StreamTests {
+  
+  @Test
+  void testCollectToList() {
+    List<String> l = Stream.of("one", "two", "three").collect(toList());
+    assertFalse(l.contains(null));
+    assertTrue(l.add("four"));
+  }
+  
+  @Test
+  void testToList() {
+    List<String> l = Stream.of("one", "two", "three").toList();
+    assertFalse(l.contains(null));
+    assertThrows(UnsupportedOperationException.class, () -> l.add("four"));
+  }
 
   @Test
   void testFlatMapToInt() {
