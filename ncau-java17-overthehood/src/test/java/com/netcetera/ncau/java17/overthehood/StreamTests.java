@@ -16,25 +16,34 @@ class StreamTests {
 
   @Test
   void testFlatMapToInt() {
+    //@formatter:off
     StringBuilder concatenated = Stream.of("one", "two", "three")
-      .flatMapToInt(s -> chars(s))
-      .collect(StringBuilder::new, (builder, c) -> builder.append((char) c), (a, b) -> a.append(b));
+                                       .flatMapToInt(StreamTests::intStreamOfChars)
+                                       .collect(
+                                             StringBuilder::new,
+                                             (builder, c) -> builder.append((char) c),
+                                             StringBuilder::append);
+    //@formatter:on
     assertEquals("onetwothree", concatenated.toString());
   }
 
   @Test
   void testMapMulti() {
+    //@formatter:off
     StringBuilder concatenated = Stream.of("one", "two", "three")
-        .mapMultiToInt((s, downstream) -> {
-          for (int i = 0; i < s.length(); i++) {
-            downstream.accept(s.charAt(i));
-          }
-        })
-        .collect(StringBuilder::new, (builder, c) -> builder.append((char) c), (a, b) -> a.append(b));
+                                       .mapMultiToInt((s, downstream) -> {
+                                         for (int i = 0; i < s.length(); i++) {
+                                           downstream.accept(s.charAt(i));
+                                         }})
+                                       .collect(
+                                             StringBuilder::new,
+                                             (builder, c) -> builder.append((char) c),
+                                             StringBuilder::append);
+    //@formatter:on
     assertEquals("onetwothree", concatenated.toString());
   }
 
-  private static IntStream chars(String s) {
+  private static IntStream intStreamOfChars(String s) {
     // IntStream because there is no CharStream
     //@formatter:off
     return IntStream.range(0, s.length())
