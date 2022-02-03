@@ -47,7 +47,7 @@ class StreamTests {
     // IntStream because there is no CharStream
     //@formatter:off
     return IntStream.range(0, s.length())
-                    .map(i -> s.charAt(i));
+                    .map(s::charAt);
     //@formatter:on
   }
 
