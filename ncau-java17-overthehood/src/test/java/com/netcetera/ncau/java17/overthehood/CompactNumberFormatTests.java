@@ -10,7 +10,7 @@ import java.util.Locale;
 import org.junit.jupiter.api.Test;
 
 class CompactNumberFormatTests {
-  
+
   @Test
   void siUnits() {
     String[] compactPatterns = {
@@ -24,25 +24,25 @@ class CompactNumberFormatTests {
 
     CompactNumberFormat siNumberFormat = new CompactNumberFormat(decimalFormat.toPattern(),
         decimalFormat.getDecimalFormatSymbols(), compactPatterns);
-    
+
     assertEquals("1 byte", siNumberFormat.format(1));
     assertEquals("1 kB", siNumberFormat.format(1000));
     assertEquals("1 MB", siNumberFormat.format(1000_000));
     assertEquals("10 MB", siNumberFormat.format(10_000_000));
     assertEquals("1 GB", siNumberFormat.format(1000_000_000));
   }
-  
+
   @Test
   void meters() {
     String[] compactPatterns = {
         "0 m", "00 m", "00 m",
         "0 km", "00 km", "000 km"};
-    
+
     DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
-    
+
     CompactNumberFormat siNumberFormat = new CompactNumberFormat(decimalFormat.toPattern(),
         decimalFormat.getDecimalFormatSymbols(), compactPatterns);
-    
+
     assertEquals("1 m", siNumberFormat.format(1));
     assertEquals("2 m", siNumberFormat.format(2));
     assertEquals("1 km", siNumberFormat.format(1000));
