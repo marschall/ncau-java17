@@ -29,13 +29,12 @@ class UnixDomainSocketTests {
   @Test
   void test() throws InterruptedException {
     Thread serverThread = new Thread(() -> new Server(this.address).serve(), "server-thread");
-    Thread clientThread = new Thread(() -> new Client(this.address).send(), "client-thread");
-
     serverThread.start();
 
+    Thread clientThread = new Thread(() -> new Client(this.address).send(), "client-thread");
     clientThread.start();
-    clientThread.join();
 
+    clientThread.join();
     serverThread.join();
   }
 

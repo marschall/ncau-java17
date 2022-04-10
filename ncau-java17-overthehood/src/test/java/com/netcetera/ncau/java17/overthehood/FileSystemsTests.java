@@ -41,7 +41,7 @@ class FileSystemsTests {
   private Path getJarFile() {
     Path userHome = Paths.get(System.getProperty("user.home"));
     Path m2Repo = userHome.resolve(".m2/repository");
-    return m2Repo.resolve("org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar");
+    return m2Repo.resolve("org/junit/jupiter/junit-jupiter-api/5.8.2/junit-jupiter-api-5.8.2.jar");
   }
 
 }

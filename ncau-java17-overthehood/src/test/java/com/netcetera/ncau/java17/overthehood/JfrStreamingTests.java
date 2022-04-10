@@ -15,6 +15,7 @@ private Recording recording;
 
   @BeforeEach
   private void startRecording() throws IOException {
+    // existing JFR API to start a recording
     this.recording = new Recording();
     this.recording.enable("jdk.ThreadSleep");
     this.recording.start();
@@ -27,6 +28,7 @@ private Recording recording;
 
   @Test
   void streamFiles() throws IOException, InterruptedException {
+    // new streaming API
     try (var eventStream = EventStream.openRepository()) {
       eventStream.setReuse(true);
       eventStream.onEvent("jdk.ThreadSleep", event -> {

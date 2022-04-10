@@ -15,13 +15,15 @@ class Base64Tests {
   @Test
   void decode() {
     Decoder decoder = Base64.getDecoder();
-    assertArrayEquals("Many hands make light work.".getBytes(US_ASCII), decoder.decode("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"));
+    byte[] expected = "Many hands make light work.".getBytes(US_ASCII);
+    assertArrayEquals(expected, decoder.decode("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"));
   }
 
   @Test
   void encode() {
     Encoder encoder = Base64.getEncoder();
-    assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", encoder.encodeToString("Many hands make light work.".getBytes(US_ASCII)));
+    byte[] input = "Many hands make light work.".getBytes(US_ASCII);
+    assertEquals("TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", encoder.encodeToString(input));
   }
 
 }
