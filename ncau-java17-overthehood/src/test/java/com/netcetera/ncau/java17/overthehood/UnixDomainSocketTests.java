@@ -8,6 +8,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.CountDownLatch;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,9 +29,11 @@ class UnixDomainSocketTests {
 
   @Test
   void test() throws InterruptedException {
-    Thread serverThread = new Thread(() -> new Server(this.address).serve(), "server-thread");
+    CountDownLatch serverStarted = new CountDownLatch(1);
+    Thread serverThread = new Thread(() -> new Server(this.address, serverStarted).serve(), "server-thread");
     serverThread.start();
 
+    serverStarted.await();
     Thread clientThread = new Thread(() -> new Client(this.address).send(), "client-thread");
     clientThread.start();
 
@@ -41,9 +44,11 @@ class UnixDomainSocketTests {
   static final class Server {
 
     private final UnixDomainSocketAddress address;
+    private final CountDownLatch serverStarted;
 
-    Server(UnixDomainSocketAddress address) {
+    Server(UnixDomainSocketAddress address, CountDownLatch serverStarted) {
       this.address = address;
+      this.serverStarted = serverStarted;
     }
 
 
@@ -52,6 +57,7 @@ class UnixDomainSocketTests {
       try (ServerSocketChannel serverChannel = ServerSocketChannel.open(StandardProtocolFamily.UNIX)) {
         serverChannel.bind(this.address);
 
+        this.serverStarted.countDown();
         try (SocketChannel clientChannel = serverChannel.accept()) {
           clientChannel.read(buffer);
           buffer.flip();
