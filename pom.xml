@@ -48,6 +48,7 @@
     <module>ncau-java17-underthehood</module>
     <module>ncau-java17-benchmarks</module>
     <module>ncau-java17-overthehood</module>
+    <module>ncau-java17-superficial</module>
   </modules>
 
   <build>
@@ -124,6 +125,16 @@
         <version>5.8.2</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.openjdk.jol</groupId>
+        <artifactId>jol-core</artifactId>
+        <version>0.16</version>
+      </dependency>
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>1.4.200</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
