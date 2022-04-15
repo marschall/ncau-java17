@@ -21,13 +21,13 @@ class TextBlocksTests {
   
   private static final String SELECT_SEQUENCE_VALUES = """
                                                        WITH RECURSIVE t(n, level_num) AS (
-                                                         SELECT NEXT VALUE FOR demo_squence AS n, 1 AS level_num
+                                                         SELECT 1
                                                            UNION ALL
-                                                         SELECT NEXT VALUE FOR demo_squence AS n, level_num + 1 AS level_num
+                                                         SELECT n + 1
                                                            FROM t
-                                                          WHERE level_num < ?)
-                                                       SELECT n
-                                                         FROM t 
+                                                          WHERE n < ?)
+                                                       SELECT NEXT VALUE FOR demo_squence
+                                                         FROM t
                                                        """;
 
   @Test
