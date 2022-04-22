@@ -14,21 +14,23 @@ import org.junit.jupiter.api.Test;
 
 class TextBlocksTests {
 
-  private static final String CREATE_SEQUENCE = """
-                                                CREATE SEQUENCE demo_squence 
-                                                NO CYCLE 
-                                                """;
+  private static final String CREATE_SEQUENCE =
+      """
+      CREATE SEQUENCE demo_squence 
+      NO CYCLE 
+      """;
   
-  private static final String SELECT_SEQUENCE_VALUES = """
-                                                       WITH RECURSIVE t(n, level_num) AS (
-                                                         SELECT 1
-                                                           UNION ALL
-                                                         SELECT n + 1
-                                                           FROM t
-                                                          WHERE n < ?)
-                                                       SELECT NEXT VALUE FOR demo_squence
-                                                         FROM t
-                                                       """;
+  private static final String SELECT_SEQUENCE_VALUES =
+      """
+      WITH RECURSIVE t(n) AS (
+        SELECT 1
+          UNION ALL
+        SELECT n + 1
+          FROM t
+         WHERE n < ?)
+      SELECT NEXT VALUE FOR demo_squence
+        FROM t
+      """;
 
   @Test
   void databaseAccess() throws SQLException {
