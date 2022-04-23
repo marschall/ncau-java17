@@ -1,0 +1,2 @@
+INSERT INTO POST (ID, TITLE,                                             CREATED_ON,                                        CREATED_BY,     UPDATED_ON,                                        UPDATED_BY,               VERSION)
+          VALUES (1,  'The best way to map a projection query to a DTO', TIMESTAMP WITH TIME ZONE '2020-03-12T10:00:00+01', 'vladmihalcea', TIMESTAMP WITH TIME ZONE '2020-03-12T10:00:00+01', 'vladmihalcea', 1);
