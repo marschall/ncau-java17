@@ -16,10 +16,10 @@ class TextBlocksTests {
 
   private static final String CREATE_SEQUENCE =
       """
-      CREATE SEQUENCE demo_squence 
-      NO CYCLE 
+      CREATE SEQUENCE demo_squence
+      NO CYCLE
       """;
-  
+
   private static final String SELECT_SEQUENCE_VALUES =
       """
       WITH RECURSIVE t(n) AS (
@@ -38,7 +38,7 @@ class TextBlocksTests {
       try (var statement = connection.createStatement()) {
         statement.execute(CREATE_SEQUENCE);
       }
-      List<Integer> sequenceValues = new ArrayList<>(10); 
+      List<Integer> sequenceValues = new ArrayList<>(10);
       try (PreparedStatement selectSequenceValues = connection.prepareStatement(SELECT_SEQUENCE_VALUES)) {
         selectSequenceValues.setInt(1, 10);
         try (ResultSet resultSet = selectSequenceValues.executeQuery()) {
