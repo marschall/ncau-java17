@@ -17,8 +17,7 @@ class TextBlocksTests {
   private static final String CREATE_SEQUENCE =
       """
       CREATE SEQUENCE demo_squence
-      NO CYCLE
-      """;
+      NO CYCLE"""; // will not have new lines
 
   private static final String SELECT_SEQUENCE_VALUES =
       """
@@ -30,7 +29,7 @@ class TextBlocksTests {
          WHERE n < ?)
       SELECT NEXT VALUE FOR demo_squence
         FROM t
-      """;
+      """; // will have new lines
 
   @Test
   void databaseAccess() throws SQLException {
