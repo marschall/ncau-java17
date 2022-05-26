@@ -14,13 +14,11 @@ import org.junit.jupiter.api.Test;
 
 class TextBlocksTests {
 
-  private static final String CREATE_SEQUENCE =
-      """
+  private static final String CREATE_SEQUENCE = """
       CREATE SEQUENCE demo_squence
       NO CYCLE"""; // will not have new lines
 
-  private static final String SELECT_SEQUENCE_VALUES =
-      """
+  private static final String SELECT_SEQUENCE_VALUES = """
       WITH RECURSIVE t(n) AS (
         SELECT 1
           UNION ALL

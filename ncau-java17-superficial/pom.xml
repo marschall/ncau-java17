@@ -9,7 +9,7 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>ncau-java17-superficial</artifactId>
-  <name>Java 17 superficial</name>
+  <name>Java 17 Superficial</name>
   <description>Demonstrates new language features introduced with Java 17</description>
 
   <build>
@@ -86,7 +86,7 @@
     <dependency>
       <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>6.0.0.Final</version>
+      <version>6.0.2.Final</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
