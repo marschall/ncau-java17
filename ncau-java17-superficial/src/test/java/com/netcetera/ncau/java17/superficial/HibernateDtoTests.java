@@ -59,7 +59,7 @@ class HibernateDtoTests {
     EntityManager entityManager = this.entityManagerFactory.createEntityManager();
     try {
       OffsetDateTime fromTimestamp = LocalDate.of(2020, 1, 1).atStartOfDay().atOffset(ZoneOffset.UTC);
-      List<PostDTO> postDTOs = entityManager.createQuery(
+      List<PostDTO> postDTOs = entityManager.createQuery( // JPL
               """
               SELECT
                 p.id,
@@ -71,6 +71,31 @@ class HibernateDtoTests {
               .unwrap(org.hibernate.query.Query.class)
               .setTupleTransformer(new AliasToBeanConstructorResultTransformer<>(PostDTO.class.getConstructor(Integer.class, String.class)))
               .getResultList();
+      assertEquals(1, postDTOs.size());
+      PostDTO postDTO = postDTOs.get(0);
+      assertEquals(new PostDTO(1, "The best way to map a projection query to a DTO"), postDTO);
+    } finally {
+      entityManager.close();
+    }
+  }
+  
+  @Test
+  void hibernateApiNativeSql() throws ReflectiveOperationException {
+    EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+    try {
+      OffsetDateTime fromTimestamp = LocalDate.of(2020, 1, 1).atStartOfDay().atOffset(ZoneOffset.UTC);
+      List<PostDTO> postDTOs = entityManager.createNativeQuery( // SQL
+              """
+              SELECT
+                p.id,
+                p.title
+              FROM post p
+              WHERE p.created_on > :fromTimestamp
+              """)
+          .setParameter("fromTimestamp", fromTimestamp)
+          .unwrap(org.hibernate.query.Query.class)
+          .setTupleTransformer(new AliasToBeanConstructorResultTransformer<>(PostDTO.class.getConstructor(Integer.class, String.class)))
+          .getResultList();
       assertEquals(1, postDTOs.size());
       PostDTO postDTO = postDTOs.get(0);
       assertEquals(new PostDTO(1, "The best way to map a projection query to a DTO"), postDTO);
