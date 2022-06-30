@@ -3,8 +3,6 @@ package com.netcetera.ncau.java17.superficial;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ class TextBlocksTests {
 
   private static final String CREATE_SEQUENCE = """
       CREATE SEQUENCE demo_squence
-      NO CYCLE"""; // will not have new lines
+      NO CYCLE"""; // will not have new line at end
 
   private static final String SELECT_SEQUENCE_VALUES = """
       WITH RECURSIVE t(n) AS (
@@ -27,7 +25,7 @@ class TextBlocksTests {
          WHERE n < ?)
       SELECT NEXT VALUE FOR demo_squence
         FROM t
-      """; // will have new lines
+      """; // will have a new line at the end
 
   @Test
   void databaseAccess() throws SQLException {
@@ -36,9 +34,9 @@ class TextBlocksTests {
         statement.execute(CREATE_SEQUENCE);
       }
       List<Integer> sequenceValues = new ArrayList<>(10);
-      try (PreparedStatement selectSequenceValues = connection.prepareStatement(SELECT_SEQUENCE_VALUES)) {
+      try (var selectSequenceValues = connection.prepareStatement(SELECT_SEQUENCE_VALUES)) {
         selectSequenceValues.setInt(1, 10);
-        try (ResultSet resultSet = selectSequenceValues.executeQuery()) {
+        try (var resultSet = selectSequenceValues.executeQuery()) {
           while (resultSet.next()) {
             sequenceValues.add(resultSet.getInt(1));
           }
