@@ -9,12 +9,12 @@ class WeekDayTests {
 
   @Test
   void switchExpression() {
-    assertEquals("Monday", WeekDay.switchExpression(SATURDAY));
+    assertEquals("Monday", WeekDay.nextWorkDayName_switchExpression(SATURDAY));
   }
 
   @Test
-  void switchStagement() {
-    assertEquals("Monday", WeekDay.switchStagement(SATURDAY));
+  void switchStatement() {
+    assertEquals("Monday", WeekDay.nextWorkDayName_switchStatement(SATURDAY));
   }
 
 }

@@ -17,7 +17,7 @@ public enum WeekDay {
     return name.substring(0, 1) + name.substring(1).toLowerCase(US);
   }
 
-  static String switchStagement(WeekDay weekDay) {
+  static String nextWorkDayName_switchStatement(WeekDay weekDay) {
     WeekDay nextWorkDay;
     switch (weekDay) {
       case FRIDAY:
@@ -45,7 +45,7 @@ public enum WeekDay {
     return capitalize(nextWorkDay);
   }
 
-  static String switchExpression(WeekDay weekDay) {
+  static String nextWorkDayName_switchExpression(WeekDay weekDay) {
     //@formatter:off
     WeekDay nextWorkDay = switch (weekDay) {
       case FRIDAY, SATURDAY, SUNDAY -> MONDAY;

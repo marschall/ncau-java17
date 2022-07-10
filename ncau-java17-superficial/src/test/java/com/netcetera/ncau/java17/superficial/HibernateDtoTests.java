@@ -35,7 +35,7 @@ class HibernateDtoTests {
     EntityManager entityManager = this.entityManagerFactory.createEntityManager();
     try {
       OffsetDateTime fromTimestamp = LocalDate.of(2020, 1, 1).atStartOfDay().atOffset(ZoneOffset.UTC);
-      List<PostDTO> postDTOs = entityManager.createQuery(
+      List<PostDTO> postDTOs = entityManager.createQuery( // JPQL
               """
               SELECT new com.netcetera.ncau.java17.superficial.PostDTO(
                  p.id,
@@ -59,7 +59,7 @@ class HibernateDtoTests {
     EntityManager entityManager = this.entityManagerFactory.createEntityManager();
     try {
       OffsetDateTime fromTimestamp = LocalDate.of(2020, 1, 1).atStartOfDay().atOffset(ZoneOffset.UTC);
-      List<PostDTO> postDTOs = entityManager.createQuery( // JPL
+      List<PostDTO> postDTOs = entityManager.createQuery( // JPQL
               """
               SELECT
                 p.id,

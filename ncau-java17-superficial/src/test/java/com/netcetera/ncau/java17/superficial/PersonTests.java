@@ -56,6 +56,11 @@ class PersonTests {
     String json = new ObjectMapper().writerFor(Person.class).writeValueAsString(this.hans);
     assertEquals("""
                  {"firstName":"Hans","lastName":"Muster"}""", json);
+    assertEquals("""
+                 {\
+                 "firstName":"Hans",\
+                 "lastName":"Muster"\
+                 }""", json);
   }
 
   @Test
