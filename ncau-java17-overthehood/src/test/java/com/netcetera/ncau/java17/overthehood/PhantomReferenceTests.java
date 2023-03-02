@@ -9,33 +9,33 @@ class PhantomReferenceTests {
 
   @Test
   void phantomReferenceExample() throws IllegalArgumentException, InterruptedException {
-    ReferenceQueue<ToBeCleanedByPhantomReference> referenceQueue = new ReferenceQueue<>();
+    ReferenceQueue<JavaFile> referenceQueue = new ReferenceQueue<>();
 
-    NativeResource resource = new NativeResource();
-    ToBeCleanedByPhantomReference toBeCleaned = new ToBeCleanedByPhantomReference(resource);
-    new NativeResourcePhantomReference(toBeCleaned, referenceQueue, resource);
+    NativeFile nativeFile = new NativeFile();
+    JavaFile toBeCleaned = new JavaFile(nativeFile);
+    new NativeFilePhantomReference(toBeCleaned, referenceQueue, nativeFile);
 
     // would have to be called in a loop in a dedicated thread
-    NativeResourcePhantomReference reference = (NativeResourcePhantomReference) referenceQueue.remove(100L);
+    NativeFilePhantomReference reference = (NativeFilePhantomReference) referenceQueue.remove(100L);
     if (reference != null) {
-      reference.getResource().free();
+      reference.getNativeFile().close();
     }
   }
 
   // must not reference ToBeCleanedByPhantomReference
-  // therefore we need a direct reference to NativeResource
-  static final class NativeResourcePhantomReference extends PhantomReference<ToBeCleanedByPhantomReference> {
+  // therefore we need a direct reference to NativeFile      
+  static final class NativeFilePhantomReference extends PhantomReference<JavaFile> {
 
-    private final NativeResource resource;
+    private final NativeFile nativeFile;
 
-    NativeResourcePhantomReference(ToBeCleanedByPhantomReference referent,
-        ReferenceQueue<? super ToBeCleanedByPhantomReference> queue, NativeResource resource) {
+    NativeFilePhantomReference(JavaFile referent,
+        ReferenceQueue<? super JavaFile> queue, NativeFile nativeFile) {
       super(referent, queue);
-      this.resource = resource;
+      this.nativeFile = nativeFile;
     }
 
-    NativeResource getResource() {
-      return resource;
+    NativeFile getNativeFile() {
+      return nativeFile;
     }
 
   }

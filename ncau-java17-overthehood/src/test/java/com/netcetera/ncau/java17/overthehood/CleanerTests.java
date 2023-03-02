@@ -8,14 +8,14 @@ class CleanerTests {
 
   @Test
   void cleanExplicitly() {
-    try (var explicitlyCleaned = new ToBeCleanedByCleaner()) {
+    try (var explicitlyCleaned = new JavaFileWithCleaner()) {
       
     }
   }
 
   @Test
   void cleanByGc() {
-    var cleanedByGc = new ToBeCleanedByCleaner();
+    var cleanedByGc = new JavaFileWithCleaner();
     assertNotNull(cleanedByGc);
   }
 
